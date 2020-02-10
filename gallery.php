@@ -7,11 +7,13 @@
   // This line of code will convert the ttime from html input type"date" to store in php varible
   // https://stackoverflow.com/questions/30243775/get-date-from-input-form-within-php
   $new_date = date('Y-m-d', strtotime($_POST['dateTaken']));
+  $fileName = $_FILES["uploadFile"]["name"];
+  echo "$fileName";
   $document_root = $_SERVER['DOCUMENT_ROOT'];
   $outputstring = $new_date."\t".$photo."\t"
-                  .$name."\t".$place."\n";
+                  .$name."\t".$place."\t".$fileName."\n";
   echo "$outputstring";
-  $saveTo = fopen("$document_root/CPCS452/uploads/data.txt", "ab");
+  $saveTo = fopen("$document_root/CPSC431-01_Assignment1_PHP-FileUpload/uploads/data.txt", "ab");
   move_uploaded_file($_FILES["uploadFile"]["tmp_name"],"uploads/".$_FILES["uploadFile"]["name"]);
 
   echo "$saveTo";
@@ -44,12 +46,22 @@
     </style>
   </head>
   <body>
-    <div class="container">
-      <div class="jumbotron" style="margin:auto; height:auto; margin-top:2vh;">
-        <h1 class="display-5">Add Photo to Gallery</h1>
+    <div class="container" style="max-width:100%">
+      <div class="jumbotron" style="margin-top:2vh;">
+        <h1 class="display-5">View All Photos</h1>
+        <hr class="my-4">
+        <div class="row">
+          <div class="col">
+            <a href="">Sort by</a>
+          </div>
+          <div class="col">
+           <a href="index.html" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Upload Image</a>
+          </div>  
+        </div>
+        
         <hr class="my-4">
         <?php
-        $post = file("$document_root/CPCS452/uploads/data.txt");
+        $post = file("$document_root/CPSC431-01_Assignment1_PHP-FileUpload/uploads/data.txt");
         $numberOfline = count($post);
         if ($numberOfline == 0) {
         echo "<p><strong>No data in the file<br />
@@ -61,6 +73,7 @@
                 <th>Photo Name</th>
                 <th>Name</th>
                 <th>Location</th>
+                <th>Image</th>
               <tr>";
         for ($i=0; $i<$numberOfline; $i++) {
         //split up each line
@@ -72,6 +85,7 @@
               <td style=\"text-align: right;\">".$line[1]."</td>
               <td style=\"text-align: right;\">".$line[2]."</td>
               <td style=\"text-align: right;\">".$line[3]."</td>
+              <td style=\"text-align: right;\">".$line[4]."</td>
           </tr>";
       }
       echo "</table>";
