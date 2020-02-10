@@ -7,7 +7,9 @@
   // This line of code will convert the ttime from html input type"date" to store in php varible
   // https://stackoverflow.com/questions/30243775/get-date-from-input-form-within-php
   $new_date = date('Y-m-d', strtotime($_POST['dateTaken']));
+<<<<<<< HEAD
   $fileName = $_FILES["uploadFile"]["name"];
+  $fileName = $_POST('uploadFile');
   echo "$fileName";
   $document_root = $_SERVER['DOCUMENT_ROOT'];
   $outputstring = $new_date."\t".$photo."\t"
@@ -56,9 +58,9 @@
           </div>
           <div class="col">
            <a href="index.html" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Upload Image</a>
-          </div>  
+          </div>
         </div>
-        
+
         <hr class="my-4">
         <?php
         $post = file("$document_root/CPSC431-01_Assignment1_PHP-FileUpload/uploads/data.txt");
